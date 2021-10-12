@@ -1,0 +1,93 @@
+extends Control
+
+# This script demonstrates how to alter StyleBoxes at runtime.
+# Custom theme item properties aren't considered Object properties per se.
+# This means that you should use `add_stylebox_override("normal", ...)`
+# instead of `set("custom_styles/normal", ...)`.
+
+onready var label = $VBoxContainer/Label
+onready var button = $VBoxContainer/Start
+onready var button2 = $VBoxContainer/Button2
+onready var reset_all_button = $VBoxContainer/ResetAllButton
+onready var button3 = $VBoxContainer/Button3
+var i = 3
+var n = 4
+var PlayerScore = 0
+var DealerScore = 0
+var shuffledDeck = [] 
+var deck = [2.1, 2.2, 2.3, 2.4,
+3.1, 3.2, 3.3, 3.4,
+4.1, 4.2, 4.3, 4.4,
+5.1, 5.2, 5.3, 5.4,
+6.1, 6.2, 6.3, 6.4,
+7.1, 7.2, 7.3, 7.4,
+8.1, 8.2, 8.3, 8.4,
+9.1, 9.2, 9.3, 9.4,
+10.1, 10.2, 10.3, 10.4,
+10.1, 10.2, 10.3, 10.4,
+10.1, 10.2, 10.3, 10.4,
+10.1, 10.2, 10.3, 10.4,
+11.1, 11.2, 11.3, 11.4,]
+
+
+func _ready():
+	randomize()
+	deck.shuffle()
+	print(deck)
+	button.grab_focus()
+	return (deck)
+
+func _on_Button3_pressed():
+	deck.shuffle()
+	print(deck)
+	button.grab_focus()
+	return (deck)
+
+
+
+func _on_Start_pressed():
+	DealerScore = int(deck[0]) + int(deck[1])
+	PlayerScore = int(deck[2]) + int(deck[3])
+	print ("Счет игрока: " + str(PlayerScore))
+	print ("Счет диллера: " + str(DealerScore))
+	if PlayerScore == 21:
+		print ("Игрок выйграл набрав 21 очко")
+	elif DealerScore == 21:
+		print ("Диллер победил набрав 21 очко")
+
+
+
+func _on_button2_pressed():
+	i += 2
+	n += 2
+	PlayerScore += int(deck[i])
+	DealerScore += int(deck[n])
+	print (PlayerScore)
+	print (DealerScore)
+	if PlayerScore > 21 and DealerScore >21:
+		print ("Ничья")
+	elif PlayerScore > 21 and DealerScore <= 21:
+		print ("Игрок проиграл набрав больше 21")
+	elif PlayerScore <=21 and DealerScore > 21:
+		print ("Диллер проиграл набрав больше 21")
+
+
+func _on_reset_all_button_pressed():
+	if PlayerScore > DealerScore:
+		print ("Игрок выйграл набрав " + str(PlayerScore) + " очков")
+	else:
+		print ("Игрок проиграл, диллер набрал " + str(DealerScore) + " очка")
+
+# GUI Theming Override Demo
+
+Demonstrates how to override GUI colors and styleboxes at runtime.
+
+Language: GDScript
+
+Renderer: GLES 2
+
+Check out this demo on the asset library: https://godotengine.org/asset-library/asset/786
+
+## Screenshots
+
+![Screenshot](screenshots/theming_override.png)
